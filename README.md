@@ -2,7 +2,7 @@
 # Pig Latin ☕
 Pig Latin translator that translates English to Pig Latin
 
-![Alt Text](https://media.giphy.com/media/Ub8XEam5vXbMY/giphy.gif)
+![Pig](https://media.giphy.com/media/Ub8XEam5vXbMY/giphy.gif)
 
 ## et-gay arted-stay
 
