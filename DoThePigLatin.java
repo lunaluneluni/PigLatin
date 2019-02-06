@@ -4,66 +4,59 @@ public class DoThePigLatin {
 
 	/*
 	 * Created by Luna
-	 * Last updated: 3/20/2018
 	 */
 
 	private static String pigged(String input) {
 
+		input = input.toLowerCase();
 		String[] strArr = input.split(" "); // Split the input by the space and store them in an array
 		String punctuation = ",.;:!?";
-		String word = "", p = "", pig = "";
+		String word = "", savePunctuation = "", pigLatin = "";
 
 		for (int i = 0; i < strArr.length; i++) {
 
 			word = strArr[i];
 
-			// Starts with vowels
-			if (isVowel(word)) {
+			if (startsWithVowel(word)) {
 
-				// Checking for punctuation
-				if (isPunc(word, punctuation)) {
-					p = punc(word); // Save the punctuation to be concatenated at the end of the word
-					word = removePunc(word) + "-yay" + p;
+				if (punctuationCheck(word, punctuation)) {
+					// Concatenate saved punctuation at the end of the word
+					savePunctuation = punctuationFilter(word);
+					word = removePunctuation(word) + "-yay" + savePunctuation;
 				} else {
 					word = word + "-yay";
 				}
 			}
-			// Starts with consonants
+
 			else {
 
-				// Checking for punctuation
-				if (isPunc(word, punctuation)) {
-					p = punc(word); // Save the punctuation to be concatenated at the end of the word
-					word = removePunc(word);
+				if (punctuationCheck(word, punctuation)) {
+					savePunctuation = punctuationFilter(word);
+					word = removePunctuation(word);
 
-					// Checking for consonant cluster
-					if (isCluster(word)) {
-						word = cluster(word) + "ay" + p; 
+					if (startsWithConsonantCluster(word)) {
+						word = consonantClusterFormat(word) + "ay" + savePunctuation;
 					} else {
-						word = notCluster(word) + "ay" + p;
+						word = startsWithConsonant(word) + "ay" + savePunctuation;
 					}
 
 				} else {
 
-					// Checking for consonant cluster
-					if (isCluster(word)) {
-						word = cluster(word) + "ay";
+					if (startsWithConsonantCluster(word)) {
+						word = consonantClusterFormat(word) + "ay";
 					} else {
-						word = notCluster(word) + "ay";
+						word = startsWithConsonant(word) + "ay";
 					}
 				}
 			}
 
-			pig += word + " ";
+			pigLatin += word + " ";
 		}
 
-		return pig;
+		return pigLatin;
 	}
 
-	// Returns true if the word starts with a vowel
-	private static boolean isVowel(String word) {
-
-		word = word.toLowerCase();
+	private static boolean startsWithVowel(String word) {
 
 		if (word.charAt(0) == 'a' || word.charAt(0) == 'e' || word.charAt(0) == 'i' || word.charAt(0) == 'o'
 				|| word.charAt(0) == 'u') {
@@ -73,22 +66,20 @@ public class DoThePigLatin {
 		return false;
 	}
 
-	// Returns true if the word starts with a consonant cluster
-	private static boolean isCluster(String word) {
+	private static boolean startsWithConsonantCluster(String word) {
 
-		if (!isVowel(word) && !isVowel(word.substring(1, word.length()))) {
+		if (!startsWithVowel(word) && !startsWithVowel(word.substring(1, word.length()))) {
 			return true;
 		}
 
 		return false;
 	}
 
-	// Helps to format the word beginning with a consonant cluster
-	private static String cluster(String word) {
+	private static String consonantClusterFormat(String word) {
 
 		for (int i = 0; i < word.length(); i++) {
 
-			if (isVowel("" + word.charAt(i))) {
+			if (startsWithVowel("" + word.charAt(i))) {
 				word = word.substring(i, word.length()) + "-" + word.substring(0, i);
 				return word;
 			}
@@ -97,8 +88,7 @@ public class DoThePigLatin {
 		return word;
 	}
 
-	// Helps to format the word beginning with a consonant
-	private static String notCluster(String word) {
+	private static String startsWithConsonant(String word) {
 
 		char c = word.charAt(0);
 
@@ -107,8 +97,7 @@ public class DoThePigLatin {
 		return word;
 	}
 
-	// Checks for punctuation
-	private static boolean isPunc(String word, String punctuation) {
+	private static boolean punctuationCheck(String word, String punctuation) {
 
 		for (int i = 0; i < word.length(); i++) {
 
@@ -120,24 +109,22 @@ public class DoThePigLatin {
 		return false;
 	}
 
-	// Returns punctuation from the given word
-	private static String punc(String word) {
+	private static String punctuationFilter(String word) {
 
-		String p = "";
+		String punctuation = "";
 
 		for (int i = 0; i < word.length(); i++) {
 
 			if (!Character.isLetter(word.charAt(i))) {
-				p = word.substring(i);
-				return p;
+				punctuation = word.substring(i);
+				return punctuation;
 			}
 		}
 
-		return p;
+		return punctuation;
 	}
 
-	// Removes punctuation (formatting purpose)
-	private static String removePunc(String word) {
+	private static String removePunctuation(String word) {
 
 		for (int i = 0; i < word.length(); i++) {
 
@@ -149,37 +136,38 @@ public class DoThePigLatin {
 		return word;
 	}
 
-
+	
 	public static void main(String[] args) {
 
-		Scanner keyb = new Scanner(System.in);
+		Scanner keybScan = new Scanner(System.in);
 		String input = "";
-		
+
 		System.out.println("-- " + pigged("Welcome to the World of Pig Latin") + "--");
 		System.out.println("Validated punctuation marks include: , . ; : ! ?\n");
 		System.out.print("Try me: ");
-		input = keyb.nextLine();
+		input = keybScan.nextLine();
 		System.out.println("Piggy says: " + pigged(input) + "\n");
 		System.out.print("Would you like to continue? Enter \"Yes\" to continue: ");
-		input = keyb.nextLine();
-		
-		if((input.toLowerCase()).equals("yes")) {
+		input = keybScan.nextLine();
 
-			while(true) {
-				
+		input = input.toLowerCase();
+		if ((input.toLowerCase()).equals("yes")) {
+
+			while (true) {
+
 				System.out.print("\nTry me: ");
-				input = keyb.nextLine();
+				input = keybScan.nextLine();
 				System.out.println("Piggy says: " + pigged(input) + "\n");
 				System.out.print("Would you like to continue? Enter \"Yes\" to continue: ");
-				input = keyb.nextLine();
-				
-				if(!(input.toLowerCase()).equals("yes")) {
-					System.out.println("Piggy says: "+ pigged("Good bye") + "\n");
+				input = keybScan.nextLine();
+
+				if (!(input.toLowerCase()).equals("yes")) {
+					System.out.println("Piggy says: " + pigged("Good bye") + "\n");
 					break;
 				}
 			}
 		}
-		
+
 		System.out.println("-- " + pigged("Program is ending") + " --");
 	}
 
