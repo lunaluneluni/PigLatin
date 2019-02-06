@@ -1,8 +1,13 @@
 ---
 # Pig Latin ☕
-Pig Latin translator for translating English to Pig Latin
+Pig Latin translator that translates English to Pig Latin
+
+![Pig](https://media.giphy.com/media/Ub8XEam5vXbMY/giphy.gif)
 
 ## et-gay arted-stay
+
+### Used Data Structure:
+- Array
 
 ### Rules: 
 - Words starting with vowels -> Add "-yay"
@@ -16,7 +21,7 @@ Pig Latin translator for translating English to Pig Latin
     Output: ig-pay ort-snay
 ```
 
-### Additional note:
+### Additional Note:
 - Legal punctuation marks for the program: `, . ; : ! ?`
 
 ---
