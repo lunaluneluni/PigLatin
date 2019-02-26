@@ -7,7 +7,7 @@ Pig Latin translator that translates English to Pig Latin
 ## et-gay arted-stay
 
 ### Used Data Structure:
-- Array
+- Arrays
 
 ### Rules: 
 - Words starting with vowels -> Add "-yay"
